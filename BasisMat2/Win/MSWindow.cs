@@ -4,11 +4,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BasisMat2.Win
 {
     public class MSWindow : IWindow
     {
+        const uint WM_KEYDOWN = 0x100;
+        const uint WM_KEYUP = 0x0101;
+        const uint WM_CLOSE = 0x0010;
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
@@ -16,8 +21,18 @@ namespace BasisMat2.Win
         static extern int GetWindowTextLength(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-        
+        static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+
         public enum SW : int
         {
             HIDE = 0,
@@ -58,6 +73,32 @@ namespace BasisMat2.Win
         public void Show()
         {
             ShowWindowAsync(Handle, (int)SW.SHOW);
+        }
+
+        public void WindowPos(int x, int y, int Width, int Height)
+        {
+            MoveWindow(Handle, x, y, Width, Height, true);
+        }
+
+        public void SendKeyStroke(Keys key) {
+            PostMessage(Handle, WM_KEYDOWN, (IntPtr)(key), IntPtr.Zero);
+            PostMessage(Handle, WM_KEYUP, (IntPtr)(key), IntPtr.Zero);
+
+        }
+
+        public void SendKeyDown(Keys key)
+        {
+            PostMessage(Handle, WM_KEYDOWN, (IntPtr)(key), IntPtr.Zero);
+        }
+
+        public void SendKeyUp(Keys key)
+        {
+            PostMessage(Handle, WM_KEYUP, (IntPtr)(key), IntPtr.Zero);
+        }
+
+        public void Close()
+        {
+            SendMessage(Handle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
     }
 }

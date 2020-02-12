@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace BasisMat2
 {
@@ -29,46 +30,16 @@ namespace BasisMat2
         {
             InitializeComponent();
             UpdateMaplePath();
-            
+
             btnTest.Click += (s, e) => {
- 
                 Task.Run(async () => {
-                    var engine = new MapleLinearAlgebra(Settings.Default.Path);
-                    engine.Open();
-                    var matrix = new MapleMatrix(new string[][]
-                        {
-                            new string[] { "a", "2", "3" },
-                            new string[] { "1", "-4", "-19" },
-                            new string[] { "-1", "3", "14" }
-                        });
+                    var operations = await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(Settings.Default.Path);
+                    
 
-
-                    IWindow window = await engine.GaussianEliminationTutor(matrix);
-                    window.Hide();
-
-                    if (window is MSWindow) // Microsoft Windows
-                    {
-
-
-                        /*
-                        var interaction = new MSWindowInteraction((MSWindow)window);
-                        var childWindows = interaction.GetElementHandlers();
-                        
-                        foreach (var childWindow in childWindows)
-                        {
-                            //var txt = childWindow.GetText();
-
-                            System.Diagnostics.Debugger.Break();
-                        }
-                        */
-
-                    } // .. else { /*other OS*/ }
-
-
-                    await Task.Delay(1000 * 1000000);
-                    engine.Close();
                 });
             };
+
+
         }
 
         private void BtnMapleSelect_Click(object sender, RoutedEventArgs e)
@@ -94,7 +65,6 @@ namespace BasisMat2
                 MessageBox.Show("Maple Command Line kunne ikke findes.");
             }
         }
-
         private void UpdateMaplePath()
         {
             if (!string.IsNullOrWhiteSpace(Settings.Default.Path))
