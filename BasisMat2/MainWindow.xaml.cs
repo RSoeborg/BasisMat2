@@ -103,5 +103,10 @@ namespace BasisMat2
                 lblMaplePath.Content = $"Path: {cmaple.Directory.Parent.FullName}";
             }
         }
+
+        private void closeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }

@@ -6,82 +6,78 @@
         xmlns:local="clr-namespace:BasisMat2"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ControlTemplate x:Key="ButtonBaseControlTemplate1" TargetType="{x:Type ButtonBase}">
-            <Grid>
-                <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
-                    <Grid>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{Binding (materialDesign:ButtonAssist.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
-                            <Border.Effect>
-                                <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
-                                    <Binding.Converter>
-                                        <materialDesign:ShadowConverter/>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Border.Effect>
-                        </Border>
-                        <ProgressBar x:Name="ProgressBar" Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}" Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Left" Height="{TemplateBinding Height}" IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}" Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}" Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}" Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}" Style="{DynamicResource MaterialDesignLinearProgressBar}" Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}">
-                            <ProgressBar.Visibility>
-                                <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
-                                    <Binding.Converter>
-                                        <BooleanToVisibilityConverter/>
-                                    </Binding.Converter>
-                                </Binding>
-                            </ProgressBar.Visibility>
-                        </ProgressBar>
-                    </Grid>
-                </AdornerDecorator>
-                <materialDesign:Ripple ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <materialDesign:Ripple.Clip>
-                        <MultiBinding UpdateSourceTrigger="Default">
-                            <Binding ElementName="border" Path="ActualWidth"/>
-                            <Binding ElementName="border" Path="ActualHeight"/>
-                            <Binding ElementName="border" Path="CornerRadius"/>
-                            <Binding ElementName="border" Path="BorderThickness"/>
-                        </MultiBinding>
-                    </materialDesign:Ripple.Clip>
-                </materialDesign:Ripple>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
-                </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.23"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Window.Resources>
+        Title="MainWindow" 
+        Height="600" 
+        Width="1000" 
+        WindowStyle="None" 
+        WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
-            GlassFrameThickness="10"
-            NonClientFrameEdges="None"
-            ResizeBorderThickness="3"/>
+                      GlassFrameThickness="10"
+                      NonClientFrameEdges="None"
+                      ResizeBorderThickness="3"/>
     </WindowChrome.WindowChrome>
     <Grid>
+        <Border>
+            <Border.Background>
+                <SolidColorBrush Color="#333333"/>
+            </Border.Background>
+        </Border>
         <StackPanel>
-            <Border Name="toolbar" Background="#2D2D30" Width="auto" Height="32" VerticalAlignment="Top">
+            <Border Name="toolbar" 
+                    Background="#2D2D30" 
+                    Width="auto" 
+                    Height="32" 
+                    VerticalAlignment="Top">
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="10" Color="LightGray" ShadowDepth="0"/>
+                    <DropShadowEffect 
+                        BlurRadius="10" 
+                        Color="#3E3E42"
+                        ShadowDepth="0"/>
                 </Border.Effect>
-                <Button  VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" Width="55" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonBaseControlTemplate1}">
-                    <materialDesign:PackIcon Kind="Close" Height="16" Width="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button x:Name="closeButton" 
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Height="32" Width="55"
+                        BorderBrush="{x:Null}"
+                        Style="{DynamicResource CloseButton}" Click="closeButton_Click">
+                    <materialDesign:PackIcon Kind="WindowClose" 
+                                             Height="16" 
+                                             Width="16" 
+                                             VerticalAlignment="Center" 
+                                             HorizontalAlignment="Center"/>
                 </Button>
             </Border>
-            <Button x:Name="btnMapleSelect" Content="Vælg Maple" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="BtnMapleSelect_Click"/>
-            <Label x:Name="lblMaplePath" Content="Vælg maple path." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,7,0,0"/>
-            <RichTextBox x:Name="rtOutput" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="774" Margin="10,53,0,0">
+            <Button x:Name="btnMapleSelect" 
+                    Content="Vælg Maple" 
+                    HorizontalAlignment="Left" 
+                    Margin="10,10,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="75" 
+                    Click="BtnMapleSelect_Click"/>
+            <Label x:Name="lblMaplePath" 
+                   Content="Vælg maple path." 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top" 
+                   Margin="102,7,0,0"/>
+            <RichTextBox x:Name="rtOutput" 
+                         HorizontalAlignment="Left" 
+                         Height="357" 
+                         VerticalAlignment="Top" 
+                         Width="774" 
+                         Margin="10,53,0,0">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="RichTextBox"/>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
-            <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Margin="293,24,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="btnTest" 
+                    Content="Button" 
+                    HorizontalAlignment="Left" 
+                    Margin="293,24,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="75"/>
         </StackPanel>
     </Grid>
 </Window>
