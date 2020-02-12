@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Win\WindowHandleInfo.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,12 +64,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Win\IWindow.cs" />
+    <Compile Include="Win\IWinList.cs" />
+    <Compile Include="Win\MSElement.cs" />
+    <Compile Include="Win\MSWindow.cs" />
+    <Compile Include="Win\MSWindowInteraction.cs" />
+    <Compile Include="Win\MSWinList.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maple\MapleEngine.cs" />
+    <Compile Include="Maple\MapleLinearAlgebra.cs" />
+    <Compile Include="Maple\MapleMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

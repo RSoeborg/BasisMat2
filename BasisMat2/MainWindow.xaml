@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button x:Name="btnMapleSelect" Content="Vælg Maple" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="BtnMapleSelect_Click"/>
+        <Label x:Name="lblMaplePath" Content="Vælg maple path." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,7,0,0"/>
+        <RichTextBox x:Name="rtOutput" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="774" Margin="10,53,0,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Margin="293,24,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>
