@@ -11,12 +11,10 @@
         <Label x:Name="lblMaplePath" Content="Vælg maple path." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,7,0,0"/>
         <RichTextBox x:Name="rtOutput" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="774" Margin="10,53,0,0">
             <FlowDocument>
-                <Paragraph>
-                    <Run Text="RichTextBox"/>
-                </Paragraph>
+                <!-- .. text .. -->
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Margin="293,24,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Margin="709,13,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

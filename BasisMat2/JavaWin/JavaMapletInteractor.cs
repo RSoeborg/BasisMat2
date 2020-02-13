@@ -17,23 +17,13 @@ namespace BasisMat2.JavaWin
     {
         static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        public async static Task<string[]> GaussianEliminationTutorResult(string MaplePath)
+        public async static Task<string[]> GaussianEliminationTutorResult(MapleLinearAlgebra engine, MapleMatrix matrix)
         {
             string[] @out = new string[] { };
 
             await semaphoreSlim.WaitAsync();
             try
             {
-                var engine = new MapleLinearAlgebra(MaplePath);
-                engine.Open();
-                var matrix = new MapleMatrix(new string[][]
-                    {
-                        new string[] { "a", "2", "3" },
-                        new string[] { "1", "-4", "-19" },
-                        new string[] { "-1", "3", "14" }
-                    });
-
-
                 IWindow window = await engine.GaussianEliminationTutor(matrix);
                 if (window is MSWindow) // Microsoft Windows
                 {
@@ -52,6 +42,10 @@ namespace BasisMat2.JavaWin
                         var sniffer = new SocketSniffer(nic, filters, output);
                         sniffer.Start();
                         #endregion
+
+                        await Task.Delay(1000 * 900);
+
+
 
                         #region MSWIN
                         var mswin = (MSWindow)window;
@@ -94,8 +88,7 @@ namespace BasisMat2.JavaWin
                     }
 
                 }
-
-                engine.Close();
+                
             } finally
             {
                 semaphoreSlim.Release();

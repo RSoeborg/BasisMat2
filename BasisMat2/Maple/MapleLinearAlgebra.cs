@@ -26,7 +26,7 @@ namespace BasisMat2.Maple
         public async Task<IWindow> GaussianEliminationTutor(MapleMatrix matrix)
         {
             var WinList = new MSWinList();
-            await Evaluate($"GaussianEliminationTutor({matrix});", false);
+            await Evaluate($"GaussJordanEliminationTutor({matrix});", false);
             IWindow window = default(IWindow);
             while (window == default(IWindow))
             {

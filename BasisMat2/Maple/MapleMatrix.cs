@@ -64,7 +64,7 @@ namespace BasisMat2.Maple
                     
                 }
             }
-            @out.Append("})");
+            @out.Append("},datatype = anything,storage = rectangular,order = Fortran_order,shape = [])");
 
             return @out.ToString();
         }

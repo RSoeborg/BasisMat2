@@ -47,7 +47,7 @@ namespace BasisMat2.Maple
 
         public async void IncludePackage(string PackageName)
         {
-            await Evaluate($"with({PackageName}):", false);
+            await Evaluate($"with({PackageName});", false);
         }
 
      
@@ -97,11 +97,11 @@ namespace BasisMat2.Maple
             }
             await Task.Delay(500);
         }
-        private void SkipData(int lines = 1)
+        private async void SkipData(int lines = 1)
         {
             for (int i = 0; i < lines; i++)
             {
-                WaitForData();
+                await WaitForData();
             }
             ClearBufferedData();
         }

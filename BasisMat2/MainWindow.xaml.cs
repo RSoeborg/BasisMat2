@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace BasisMat2
 {
@@ -32,11 +33,41 @@ namespace BasisMat2
             UpdateMaplePath();
 
             btnTest.Click += (s, e) => {
+                var engine = new MapleLinearAlgebra(Settings.Default.Path);
+
+                var matrix = new MapleMatrix(new string[][]
+                    {
+                        new string[] {   "a",      "2",     "3"    },
+                        new string[] {   "1",     "-4",   "-19"    },
+                        new string[] {  "-1",      "3",    "14"    }
+                    });
+
                 Task.Run(async () => {
-                    var operations = await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(Settings.Default.Path);
-                    
+                    engine.Open();
+                    await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(engine, matrix);
+                    engine.Close();
 
                 });
+                
+
+                /*
+                Task.Run(async () => {
+                    engine.Open();
+                    var operations = await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(engine, matrix);
+                    //engine.Close();
+
+                    foreach (var operation in operations)
+                    {
+                        
+                    }
+
+
+                    rtOutput.Dispatcher.Invoke(new Action(() => {
+                        rtOutput.AppendText(string.Join("\n", operations));
+                    }));
+                });
+                */
+
             };
 
 
