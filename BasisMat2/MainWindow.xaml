@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BasisMat2"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        MinHeight="500" MaxHeight="5000" MinWidth="500" MaxWidth="5000"
+        MinHeight="500" MinWidth="500"
         Title="MainWindow"
         WindowStyle="None" 
         WindowStartupLocation="CenterScreen">
@@ -22,7 +22,7 @@
                 <SolidColorBrush Color="#333333"/>
             </Border.Background>
         </Border>
-        <Grid>
+        <StackPanel Margin="0 0 0 10">
             <Border Name="toolbar" 
                     Background="#2D2D30" 
                     Width="auto" 
@@ -41,7 +41,7 @@
                             Height="32" Width="55"
                             BorderBrush="{x:Null}"
                             Style="{StaticResource MaxMinButton}" Click="minimizeButton_Click">
-                            <materialDesign:PackIcon Kind="WindowMinimize"
+                        <materialDesign:PackIcon Kind="WindowMinimize"
                                                      Height="16"
                                                      Width="16"
                                                      VerticalAlignment="Center"
@@ -54,7 +54,7 @@
                             BorderBrush="{x:Null}" 
                             Style="{StaticResource MaxMinButton}"
                             Click="maximizeButton_Click">
-                            <materialDesign:PackIcon Kind="WindowMaximize"
+                        <materialDesign:PackIcon Kind="WindowMaximize"
                                                      Height="16"
                                                      Width="16"
                                                      VerticalAlignment="Center"
@@ -67,7 +67,7 @@
                             BorderBrush="{x:Null}"
                             Style="{StaticResource CloseButton}"
                             Click="closeButton_Click">
-                            <materialDesign:PackIcon Kind="WindowClose"
+                        <materialDesign:PackIcon Kind="WindowClose"
                                                      Height="16"
                                                      Width="16"
                                                      VerticalAlignment="Center"
@@ -75,46 +75,8 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <!--<StackPanel Orientation="Horizontal" Margin="4 10 4 0">
-                <ToggleButton x:Name="testKnap"
-                    Style="{StaticResource ActionToggleButton}"
-                    Height="50"
-                    Width="128">
-                    <ToggleButton.Content>
-                        <TextBlock Text="Test"
-                                   Margin="0 0 0 10"
-                                   FontSize="22"
-                                   FontFamily="Helvetica"
-                                   FontWeight="Light"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
-                <ListBox
-                    Style="{StaticResource MaterialDesignToolToggleListBox}"
-                    SelectedIndex="0">
-                    <ListBoxItem
-                        Width="100"
-                        Content="Test"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
-                    <ListBoxItem
-                        Width="100"
-                        Content="Test 1"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
-                    <ListBoxItem
-                        Width="100"
-                        Content="Test 2"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
-                    <ListBoxItem
-                        Width="100"
-                        Content="Test 3"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
-                </ListBox>
-            </StackPanel>-->
-            <Border Background="Transparent" Margin="4 10 4 10" MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TabControl MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000">
+            <Border Background="Transparent" Margin="10" VerticalAlignment="Center">
+                <TabControl MinHeight="200" MinWidth="200">
                     <TabItem Header="Vælg Maple" IsSelected="true">
                         <StackPanel>
                             <Button x:Name="btnMapleSelect"
@@ -134,11 +96,11 @@
                                          MinHeight="50"
                                          VerticalAlignment="Top"
                                          Margin="10,53,10,0">
-                                         <FlowDocument>
-                                             <Paragraph>
-                                                 <Run Text="RichTextBox"/>
-                                             </Paragraph>
-                                         </FlowDocument>
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="RichTextBox"/>
+                                    </Paragraph>
+                                </FlowDocument>
                             </RichTextBox>
                             <Button x:Name="btnTest"
                                     Content="Button"
@@ -149,38 +111,38 @@
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Foreground">
-                        <StackPanel Height="500">
-                            <Button Name="btn1" Foreground="Black">Foreground</Button>
+                        <StackPanel>
+                            <Button Name="btn1" Foreground="Black" VerticalAlignment="Top">Foreground</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="FontFamily">
-                        <StackPanel Height="500">
+                        <StackPanel>
                             <Button Name="btn2" FontFamily="Arial">FontFamily</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="FontSize">
-                        <StackPanel Height="500">
+                        <StackPanel>
                             <Button Name="btn3" FontSize="10">FontSize</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="FontStyle">
-                        <StackPanel Height="500">
+                        <StackPanel>
                             <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="FontWeight">
-                        <StackPanel Height="500">
+                        <StackPanel>
                             <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="BorderBrush">
-                        <StackPanel Height="500">
+                        <StackPanel>
                             <Button Name="btn6" BorderBrush="Red">BorderBrush</Button>
                         </StackPanel>
                     </TabItem>
                 </TabControl>
             </Border>
 
-        </Grid>
+        </StackPanel>
     </Grid>
 </Window>
