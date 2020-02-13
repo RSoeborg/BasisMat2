@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:BasisMat2"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" 
-        Height="650" 
-        Width="1000" 
+        MinHeight="500" MaxHeight="5000" MinWidth="500" MaxWidth="5000"
+        Title="MainWindow"
         WindowStyle="None" 
         WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
@@ -23,7 +22,7 @@
                 <SolidColorBrush Color="#333333"/>
             </Border.Background>
         </Border>
-        <StackPanel>
+        <Grid>
             <Border Name="toolbar" 
                     Background="#2D2D30" 
                     Width="auto" 
@@ -114,73 +113,74 @@
                         VerticalContentAlignment="Center"/>
                 </ListBox>
             </StackPanel>-->
-            <TabControl Margin="4 10 4 10" MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000">
-                <TabItem Header="Vælg Maple" IsSelected="true">
-                    <StackPanel>
-                        <Button x:Name="btnMapleSelect" 
-                    Content="Vælg Maple" 
-                    HorizontalAlignment="Left" 
-                    Margin="10,10,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="110" 
-                    Click="BtnMapleSelect_Click"/>
-                        <Label x:Name="lblMaplePath" 
-                   Content="Vælg maple path." 
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Top" 
-                   Margin="102,7,0,0"/>
-                        <RichTextBox x:Name="rtOutput" 
-                         HorizontalAlignment="Left" 
-                         Height="357" 
-                         VerticalAlignment="Top" 
-                         Width="774" 
-                         Margin="10,53,0,0">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="RichTextBox"/>
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <Button x:Name="btnTest" 
-                    Content="Button" 
-                    HorizontalAlignment="Left" 
-                    Margin="293,24,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="75"/>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="Foreground">
-                    <StackPanel Height="500">
-                        <Button Name="btn1" Foreground="Black">Foreground</Button>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="FontFamily">
-                    <StackPanel Height="500">
-                        <Button Name="btn2" FontFamily="Arial">FontFamily</Button>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="FontSize">
-                    <StackPanel Height="500">
-                        <Button Name="btn3" FontSize="10">FontSize</Button>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="FontStyle">
-                    <StackPanel Height="500">
-                        <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="FontWeight">
-                    <StackPanel Height="500">
-                        <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="BorderBrush">
-                    <StackPanel Height="500">
-                        <Button Name="btn6" BorderBrush="Red">BorderBrush</Button>
-                    </StackPanel>
-                </TabItem>
-            </TabControl>
-            
-        </StackPanel>
+            <Border Background="Transparent" Margin="4 10 4 10" MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TabControl MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000">
+                    <TabItem Header="Vælg Maple" IsSelected="true">
+                        <StackPanel>
+                            <Button x:Name="btnMapleSelect"
+                                    Content="Vælg Maple"
+                                    HorizontalAlignment="Left"
+                                    Margin="10,10,0,0"
+                                    VerticalAlignment="Top"
+                                    Width="110"
+                                    Click="BtnMapleSelect_Click"/>
+                            <Label x:Name="lblMaplePath"
+                                   Content="Vælg maple path."
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Margin="102,7,0,0"/>
+                            <RichTextBox x:Name="rtOutput"
+                                         HorizontalAlignment="Left"
+                                         MinHeight="50"
+                                         VerticalAlignment="Top"
+                                         Margin="10,53,10,0">
+                                         <FlowDocument>
+                                             <Paragraph>
+                                                 <Run Text="RichTextBox"/>
+                                             </Paragraph>
+                                         </FlowDocument>
+                            </RichTextBox>
+                            <Button x:Name="btnTest"
+                                    Content="Button"
+                                    HorizontalAlignment="Left"
+                                    Margin="293,24,0,24"
+                                    VerticalAlignment="Top"
+                                    Width="75"/>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Foreground">
+                        <StackPanel Height="500">
+                            <Button Name="btn1" Foreground="Black">Foreground</Button>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="FontFamily">
+                        <StackPanel Height="500">
+                            <Button Name="btn2" FontFamily="Arial">FontFamily</Button>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="FontSize">
+                        <StackPanel Height="500">
+                            <Button Name="btn3" FontSize="10">FontSize</Button>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="FontStyle">
+                        <StackPanel Height="500">
+                            <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="FontWeight">
+                        <StackPanel Height="500">
+                            <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="BorderBrush">
+                        <StackPanel Height="500">
+                            <Button Name="btn6" BorderBrush="Red">BorderBrush</Button>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Border>
+
+        </Grid>
     </Grid>
 </Window>
