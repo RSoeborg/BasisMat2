@@ -42,15 +42,11 @@ namespace BasisMat2.JavaWin
                         var sniffer = new SocketSniffer(nic, filters, output);
                         sniffer.Start();
                         #endregion
-
-                        await Task.Delay(1000 * 900);
-
-
-
+                        
                         #region MSWIN
                         var mswin = (MSWindow)window;
                         mswin.WindowPos(0, 0, 400, 800);
-
+                        
                         for (int i = 0; i < 4; i++)
                         {
                             mswin.SendKeyStroke(System.Windows.Forms.Keys.Tab);
@@ -59,7 +55,15 @@ namespace BasisMat2.JavaWin
 
                         mswin.SendKeyStroke(System.Windows.Forms.Keys.Enter);
                         mswin.Hide();
-                        await Task.Delay(1500);
+                        long LastPackageCount = 0;
+                        int WaitTries = 0;
+                        while (true) // wait for program to stop sending packages to intercept.
+                        {
+                            await Task.Delay(400);
+                            LastPackageCount = sniffer.PacketsCaptured;
+                            if (LastPackageCount > 0 && LastPackageCount == sniffer.PacketsCaptured) WaitTries++;
+                            if (WaitTries > 4) break;
+                        }
                         mswin.Close();
                         #endregion
 

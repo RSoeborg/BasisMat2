@@ -31,7 +31,7 @@ namespace BasisMat2.Maple
             while (window == default(IWindow))
             {
                 await Task.Delay(5);
-                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith("Gaussian Elimination"));
+                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith("Gauss-Jordan Elimination"));
             }
             await Task.Delay(200);//wait for it to be loaded properly.
             return window;

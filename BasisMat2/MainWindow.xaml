@@ -95,19 +95,20 @@
                                          HorizontalAlignment="Left"
                                          MinHeight="50"
                                          VerticalAlignment="Top"
-                                         Margin="10,53,10,0">
+                                         Margin="10,53,10,0"
+                                         Foreground="White">
                                 <FlowDocument>
                                     <Paragraph>
-                                        <Run Text="RichTextBox"/>
+                                        <Run Text=""/>
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
                             <Button x:Name="btnTest"
-                                    Content="Button"
+                                    Content="Udregn Matrix"
                                     HorizontalAlignment="Left"
                                     Margin="293,24,0,24"
                                     VerticalAlignment="Top"
-                                    Width="75"/>
+                                    Width="148"/>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Foreground">

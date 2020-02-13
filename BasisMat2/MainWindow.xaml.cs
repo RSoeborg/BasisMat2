@@ -32,6 +32,7 @@ namespace BasisMat2
             InitializeComponent();
             UpdateMaplePath();
 
+            #region Test (Kan blive slettet NP)
             btnTest.Click += (s, e) => {
                 var engine = new MapleLinearAlgebra(Settings.Default.Path);
 
@@ -42,33 +43,25 @@ namespace BasisMat2
                         new string[] {  "-1",      "3",    "14"    }
                     });
 
-                Task.Run(async () => {
-                    engine.Open();
-                    await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(engine, matrix);
-                    engine.Close();
+                btnTest.IsEnabled = false;
+                btnTest.Content = "Udregner...";
 
-                });
-                
-
-                /*
                 Task.Run(async () => {
                     engine.Open();
                     var operations = await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(engine, matrix);
-                    //engine.Close();
-
-                    foreach (var operation in operations)
-                    {
-                        
-                    }
-
-
                     rtOutput.Dispatcher.Invoke(new Action(() => {
+                        rtOutput.Document.Blocks.Clear();
                         rtOutput.AppendText(string.Join("\n", operations));
-                    }));
-                });
-                */
 
+                        btnTest.Content = "Udregn Matrix";
+                        btnTest.IsEnabled = true;
+                    }));
+
+                    engine.Close();
+                });    
             };
+            #endregion
+
 
 
         }
