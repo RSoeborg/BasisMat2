@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="600" 
+        Height="650" 
         Width="1000" 
         WindowStyle="None" 
         WindowStartupLocation="CenterScreen">
@@ -41,7 +41,7 @@
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}"
-                            Style="{DynamicResource MaxMinButton}" Click="minimizeButton_Click">
+                            Style="{StaticResource MaxMinButton}" Click="minimizeButton_Click">
                             <materialDesign:PackIcon Kind="WindowMinimize"
                                                      Height="16"
                                                      Width="16"
@@ -53,7 +53,7 @@
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}" 
-                            Style="{DynamicResource MaxMinButton}"
+                            Style="{StaticResource MaxMinButton}"
                             Click="maximizeButton_Click">
                             <materialDesign:PackIcon Kind="WindowMaximize"
                                                      Height="16"
@@ -66,7 +66,7 @@
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}"
-                            Style="{DynamicResource CloseButton}"
+                            Style="{StaticResource CloseButton}"
                             Click="closeButton_Click">
                             <materialDesign:PackIcon Kind="WindowClose"
                                                      Height="16"
@@ -76,36 +76,111 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <Button x:Name="btnMapleSelect" 
+            <!--<StackPanel Orientation="Horizontal" Margin="4 10 4 0">
+                <ToggleButton x:Name="testKnap"
+                    Style="{StaticResource ActionToggleButton}"
+                    Height="50"
+                    Width="128">
+                    <ToggleButton.Content>
+                        <TextBlock Text="Test"
+                                   Margin="0 0 0 10"
+                                   FontSize="22"
+                                   FontFamily="Helvetica"
+                                   FontWeight="Light"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                <ListBox
+                    Style="{StaticResource MaterialDesignToolToggleListBox}"
+                    SelectedIndex="0">
+                    <ListBoxItem
+                        Width="100"
+                        Content="Test"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+                    <ListBoxItem
+                        Width="100"
+                        Content="Test 1"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+                    <ListBoxItem
+                        Width="100"
+                        Content="Test 2"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+                    <ListBoxItem
+                        Width="100"
+                        Content="Test 3"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+                </ListBox>
+            </StackPanel>-->
+            <TabControl Margin="4 10 4 10" MinHeight="200" MaxHeight="5000" MinWidth="200" MaxWidth="5000">
+                <TabItem Header="Vælg Maple" IsSelected="true">
+                    <StackPanel>
+                        <Button x:Name="btnMapleSelect" 
                     Content="Vælg Maple" 
                     HorizontalAlignment="Left" 
                     Margin="10,10,0,0" 
                     VerticalAlignment="Top" 
-                    Width="75" 
+                    Width="110" 
                     Click="BtnMapleSelect_Click"/>
-            <Label x:Name="lblMaplePath" 
+                        <Label x:Name="lblMaplePath" 
                    Content="Vælg maple path." 
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Top" 
                    Margin="102,7,0,0"/>
-            <RichTextBox x:Name="rtOutput" 
+                        <RichTextBox x:Name="rtOutput" 
                          HorizontalAlignment="Left" 
                          Height="357" 
                          VerticalAlignment="Top" 
                          Width="774" 
                          Margin="10,53,0,0">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="RichTextBox"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-            <Button x:Name="btnTest" 
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Run Text="RichTextBox"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <Button x:Name="btnTest" 
                     Content="Button" 
                     HorizontalAlignment="Left" 
                     Margin="293,24,0,0" 
                     VerticalAlignment="Top" 
                     Width="75"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Foreground">
+                    <StackPanel Height="500">
+                        <Button Name="btn1" Foreground="Black">Foreground</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="FontFamily">
+                    <StackPanel Height="500">
+                        <Button Name="btn2" FontFamily="Arial">FontFamily</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="FontSize">
+                    <StackPanel Height="500">
+                        <Button Name="btn3" FontSize="10">FontSize</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="FontStyle">
+                    <StackPanel Height="500">
+                        <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="FontWeight">
+                    <StackPanel Height="500">
+                        <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="BorderBrush">
+                    <StackPanel Height="500">
+                        <Button Name="btn6" BorderBrush="Red">BorderBrush</Button>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            
         </StackPanel>
     </Grid>
 </Window>

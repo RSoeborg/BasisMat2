@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="CloseButtonTheme.xaml"/>
                 <ResourceDictionary Source="MaximizeMinimizeButtonTheme.xaml"/>
+                <ResourceDictionary Source="TabControlTheme.xaml"/>
+                <ResourceDictionary Source="testToggleButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
