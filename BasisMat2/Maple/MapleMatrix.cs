@@ -20,9 +20,11 @@ namespace BasisMat2.Maple
             Columns = Values.First().Length;
         }
         public MapleMatrix(string LPrintMapleOutput) {
+            LPrintMapleOutput = LPrintMapleOutput.Replace(" ", "");
+
             // Matrix(3,3,{(1, 1) = 1, (2, 2) = 1, (3, 3) = 1},datatype = anything,storage = rectangular,order = Fortran_order,shape = [])
             var DimensionsRegex = new Regex(@"Matrix\(([0-9]+)\,([0-9]+)\,\{", RegexOptions.Singleline);
-            var ValuesRegex = new Regex(@"\(([0-9]+)\,\ ([0-9]+)\)\ \=\ ([0-9]+)(\,|)", RegexOptions.Singleline);
+            var ValuesRegex = new Regex(@"\(([0-9]+)\,([0-9]+)\)\=([0-9a-zA-Z\\\(\) \-'_\*\/\+\-]+)(\,|)", RegexOptions.Singleline);
 
             var DimensionsMatch = DimensionsRegex.Match(LPrintMapleOutput);
             if (DimensionsMatch.Success)
@@ -52,7 +54,7 @@ namespace BasisMat2.Maple
         public override string ToString()
         {
             StringBuilder @out = new StringBuilder();
-            @out.Append($"Matrix({Rows}, {Columns}, {{");
+            @out.Append($"Matrix({Rows},{Columns},{{");
             for (int ri = 0; ri < Rows; ri++)
             {
                 for (int ci = 0; ci < Columns; ci++)
@@ -64,7 +66,7 @@ namespace BasisMat2.Maple
                     
                 }
             }
-            @out.Append("},datatype = anything,storage = rectangular,order = Fortran_order,shape = [])");
+            @out.Append("})"); // ,datatype = anything,storage = rectangular,order = Fortran_order,shape = []
 
             return @out.ToString();
         }

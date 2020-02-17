@@ -13,5 +13,9 @@ namespace BasisMat2
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            
+        }
     }
 }

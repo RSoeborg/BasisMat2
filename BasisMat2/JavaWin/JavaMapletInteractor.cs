@@ -10,28 +10,43 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BasisMat2.JavaWin
 {
-    class JavaMapletInteractor
+    sealed class JavaMapletInteractor
     {
-        static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+        static readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        public async static Task<string[]> GaussianEliminationTutorResult(MapleLinearAlgebra engine, MapleMatrix matrix)
+        public async static Task<JavaMapletGaussOutput> GaussJordanEliminationTutor(MapleLinearAlgebra engine, MapleMatrix matrix)
         {
-            string[] @out = new string[] { };
+            return await TutorResult(engine, matrix, nameof(engine.GaussJordanEliminationTutor));
+        }
 
-            await semaphoreSlim.WaitAsync();
+        public async static Task<JavaMapletGaussOutput> GaussianEliminationTutor(MapleLinearAlgebra engine, MapleMatrix matrix)
+        {
+            return await TutorResult(engine, matrix, nameof(engine.GaussianEliminationTutor));
+        }
+
+        private async static Task<JavaMapletGaussOutput> TutorResult(MapleLinearAlgebra engine, MapleMatrix matrix, string methodName)
+        {
+            List<string> operations = new List<string>();
+            var gaussOutput = new JavaMapletGaussOutput();
+
+            await semaphoreSlim.WaitAsync();//Since same protocol is used for every Tutor we have to wait for other tutor's to be closed before we can recall.
             try
             {
-                IWindow window = await engine.GaussianEliminationTutor(matrix);
+                var engineType = typeof(MapleLinearAlgebra);
+                var method = engineType.GetMethod(methodName);//reflection used since each Tutor uses same protocol, for linearalgebra, (but different call methods to maple)
+                
+                IWindow window = await (Task<IWindow>)method.Invoke(engine, new object[] { matrix }); // await engine.GaussJordanEliminationTutor(matrix); 
                 if (window is MSWindow) // Microsoft Windows
                 {
-                    // begin sniffing here ..
+                    // Find interfaces for sniffing.
                     var nics = NetworkInterfaceInfo.GetInterfaces();
                     var nic = nics.FirstOrDefault(c => c.Name.Contains("Loopback Pseudo"));
 
-                    // ensure loopback pseudo interface is found...
+                    // Ensure loopback pseudo interface is found...
                     if (nic != default(NetworkInterfaceInfo))
                     {
                         #region Start Sniffing
@@ -41,12 +56,12 @@ namespace BasisMat2.JavaWin
                         var output = new PcapNgFileOutput(nic, appOptions.Filename);
                         var sniffer = new SocketSniffer(nic, filters, output);
                         sniffer.Start();
-                        #endregion
-                        
+                        #endregion 
+
                         #region MSWIN
                         var mswin = (MSWindow)window;
                         mswin.WindowPos(0, 0, 400, 800);
-                        
+
                         for (int i = 0; i < 4; i++)
                         {
                             mswin.SendKeyStroke(System.Windows.Forms.Keys.Tab);
@@ -70,9 +85,7 @@ namespace BasisMat2.JavaWin
                         #region Interpret Sniffed Data
                         sniffer.Stop();
                         output.Dispose();
-
-
-                        List<string> operations = new List<string>();
+                        
                         using (var reader = new StreamReader("snifter.pcapng"))
                         {
                             var content = reader.ReadToEnd();
@@ -85,9 +98,33 @@ namespace BasisMat2.JavaWin
                                 operations.Add(operation);
                                 match = match.NextMatch();
                             }
-                        }
 
-                        @out = operations.ToArray();
+                            var mapleMatrixRegex = new Regex(@"\<content\>(\&lt\;.*?)\<", RegexOptions.Singleline);
+                            var mapleMatrixMatch = mapleMatrixRegex.Match(content);
+
+                            var lastMatchStr = "";
+                            while (mapleMatrixMatch.Success)
+                            {
+                                lastMatchStr = mapleMatrixMatch.Groups[1].Value;
+                                mapleMatrixMatch = mapleMatrixMatch.NextMatch();
+                            }
+
+                            StringBuilder builder = new StringBuilder(lastMatchStr);
+                            gaussOutput.Operations = operations.ToArray();
+
+                            int ra_index = 0;
+                            int index = 0;
+                            var search = "mtext&gt;&amp;NewLine;";
+                            while ((ra_index = builder.ToString().IndexOf(search, ra_index)) != -1)
+                            {
+                                ra_index += search.Length;
+                                if (index >= operations.Count) break;
+                                builder.Insert(ra_index, $" {gaussOutput.OperationsDa[index++]} &amp;NewLine;&amp;NewLine;&amp;NewLine;");
+                            }
+                            
+
+                            gaussOutput.MathML = HttpUtility.HtmlDecode(builder.ToString());
+                        }
                         #endregion
                     }
 
@@ -97,8 +134,8 @@ namespace BasisMat2.JavaWin
             {
                 semaphoreSlim.Release();
             }
-            
-            return @out;
+
+            return gaussOutput;
         }
         
     }
