@@ -22,7 +22,7 @@
                 <SolidColorBrush Color="#333333"/>
             </Border.Background>
         </Border>
-        <Grid Margin="0 0 0 0">
+        <StackPanel Margin="0 0 0 0">
             <Border Name="toolbar" 
                     Background="#2D2D30" 
                     Width="auto" 
@@ -160,7 +160,7 @@
                                         FontSize="80"/>
                                     <Grid 
                                         Grid.Column="1">
-                                        
+
                                     </Grid>
                                     <Label 
                                         Grid.Column="2"
@@ -172,44 +172,6 @@
                                         FontSize="80"/>
                                 </Grid>
                             </Grid>
-                            <RichTextBox 
-                                x:Name="rtOutput"
-                                HorizontalAlignment="Left"
-                                MinHeight="50"
-                                VerticalAlignment="Top"
-                                Margin="10,53,10,0"
-                                Foreground="White"
-                                FontFamily="Helvetica">
-
-            <Border>
-                <Grid Margin="0 35 0 0">
-                    <Label x:Name="lblMaplePath"
-                                   Content="Vælg maple path."
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Top"
-                                   Margin="135,15,0,0"/>
-                    <Button x:Name="btnMapleSelect"
-                                    Content="Vælg Maple"
-                                    HorizontalAlignment="Left"
-                                    Margin="10,10,0,0"
-                                    VerticalAlignment="Top"
-                                    Width="110"
-                                    Click="BtnMapleSelect_Click"/>
-                </Grid>
-            </Border>
-            
-            <Border Background="Transparent" Margin="0 100 0 0">
-                <TabControl Margin="0 0 0 0">
-                    <TabItem Header="Gauss-Jordan Elimination" IsSelected="true">
-                        <Grid>
-
-                            <Button x:Name="btnGaussSelectMatrix"
-                                    Content="Vælg Matrix"
-                                    HorizontalAlignment="Left"
-                                    Margin="10"
-                                    VerticalAlignment="Top"        
-                                    Width="148"/>
-
                             <TextBox 
                                 x:Name="txtGaussMatrix"
                                 HorizontalAlignment="Stretch" 
@@ -221,35 +183,33 @@
                                 Foreground="White"
                                 BorderThickness="1"
                                 BorderBrush="#576172"/>
-
-
-                            <RichTextBox x:Name="rtOutput"
-                                         HorizontalAlignment="Left"
-                                         BorderThickness="1"
-                                         BorderBrush="#576172"
-                                         Padding="4 4 4 4"
-                                         VerticalAlignment="Top"
-                                         Margin="10 50 10 100"
-                                         Foreground="White">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run 
-                                            Text=""/>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <Button 
-                                x:Name="btnTest"
-                                Content="Udregn Matrix"
+                            <RichTextBox 
+                                x:Name="rtOutput"
                                 HorizontalAlignment="Left"
-                                Margin="293,24,0,24"
+                                MinHeight="50"
                                 VerticalAlignment="Top"
-                                Width="148"
-                                FontFamily="Helvetica"
-                                FontWeight="Light"/>
+                                Margin="10,53,10,0"
+                                Foreground="White"
+                                FontFamily="Helvetica"/>
+                            <Button x:Name="btnTest"
+                                    Content="Udregn Matrix"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,15,25,25"
+                                    VerticalAlignment="Bottom"
+                                    
+                                    Width="148"/>
+
+                            <Button x:Name="btnCopy"
+                                    Content="Kopier (Maple)"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,15,200,25"
+                                    VerticalAlignment="Bottom"
+                                    IsEnabled="False"
+                                    
+                                    Width="148"/>
                         </StackPanel>
-                    </TabItem>
-                    <TabItem 
+                        </TabItem>
+                        <TabItem 
                         Header="Foreground"
                         FontFamily="Helvetica"
                         Foreground="White">
@@ -281,46 +241,9 @@
                             <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem 
-                        Header="FontWeight"
-                        FontFamily="Helvetica"
-                        Foreground="White">
-                        <StackPanel>
-                            <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
-                        </StackPanel>
-
-                            <Button x:Name="btnTest"
-                                    Content="Udregn Matrix"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,15,25,25"
-                                    VerticalAlignment="Bottom"
-                                    
-                                    Width="148"/>
-
-                            <Button x:Name="btnCopy"
-                                    Content="Kopier (Maple)"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,15,200,25"
-                                    VerticalAlignment="Bottom"
-                                    IsEnabled="False"
-                                    
-                                    Width="148"/>
-                            
-                           
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Noget Andet">
-                    <TabItem 
-                        Header="BorderBrush"
-                        FontFamily="Helvetica"
-                        Foreground="White">
-                        <StackPanel>
-
-                        </StackPanel>
-                    </TabItem>
                 </TabControl>
             </Border>
 
-        </Grid>
+        </StackPanel>
     </Grid>
 </Window>
