@@ -75,6 +75,11 @@ namespace BasisMat2.Win
             ShowWindowAsync(Handle, (int)SW.SHOW);
         }
 
+        public void SetWindowState(SW State)
+        {
+            ShowWindowAsync(Handle, (int)State);
+        }
+
         public void WindowPos(int x, int y, int Width, int Height)
         {
             MoveWindow(Handle, x, y, Width, Height, true);
@@ -99,6 +104,15 @@ namespace BasisMat2.Win
         public void Close()
         {
             SendMessage(Handle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MSWindow) {
+                return Handle.Equals(((MSWindow)obj).Handle);
+            }
+
+            return false;
         }
     }
 }

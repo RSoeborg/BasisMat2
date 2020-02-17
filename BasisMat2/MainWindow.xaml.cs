@@ -27,43 +27,93 @@ namespace BasisMat2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string MathMLCopy { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             UpdateMaplePath();
 
+
+
+            //mathBrowser.Navigate(new Uri(@"file:///C:/Users/Rsoeb/source/repos/BasisMat2/BasisMat2/bin/Debug/MathML/Index.html"));
+
             #region Test (Kan blive slettet NP)
             btnTest.Click += (s, e) => {
                 var engine = new MapleLinearAlgebra(Settings.Default.Path);
 
+                
+                /*
                 var matrix = new MapleMatrix(new string[][]
                     {
                         new string[] {   "a",      "2",     "3"    },
                         new string[] {   "1",     "-4",   "-19"    },
                         new string[] {  "-1",      "3",    "14"    }
                     });
-
+                */
+                
+                btnCopy.IsEnabled = false;
                 btnTest.IsEnabled = false;
                 btnTest.Content = "Udregner...";
 
+                var gaussMatrixRaw = txtGaussMatrix.Text.Trim();
+                if (gaussMatrixRaw.EndsWith(";"))
+                    gaussMatrixRaw = gaussMatrixRaw.Remove(gaussMatrixRaw.Length - 1, 1);
+
                 Task.Run(async () => {
                     engine.Open();
-                    var operations = await JavaWin.JavaMapletInteractor.GaussianEliminationTutorResult(engine, matrix);
-                    rtOutput.Dispatcher.Invoke(new Action(() => {
+
+                    var minified = await engine.LPrint(gaussMatrixRaw);
+                    minified = minified.Replace("\r\n", "");
+
+                    MapleMatrix matrix = default(MapleMatrix);
+
+                    try
+                    {
+                        matrix = new MapleMatrix(minified);
+                    } catch (ArgumentException) {
+                        MessageBox.Show("Matrix kunne ikke fortolkes. Vær sikker på du har kopieret fra maple");
+                        rtOutput.Dispatcher.Invoke(() => {
+                            btnTest.Content = "Udregn Matrix";
+                            btnTest.IsEnabled = true;
+                        });
+                        engine.Close();
+                        return;
+                    }
+
+                    var TutorResult = await JavaWin.JavaMapletInteractor.GaussJordanEliminationTutor(engine, matrix);
+                     
+                    rtOutput.Dispatcher.Invoke(() => {
                         rtOutput.Document.Blocks.Clear();
-                        rtOutput.AppendText(string.Join("\n", operations));
+                        rtOutput.AppendText(string.Join("\n", TutorResult.OperationsDa));
+                        
+                        
+                        btnCopy.IsEnabled = true;
+                        MathMLCopy = TutorResult.MathML;
 
                         btnTest.Content = "Udregn Matrix";
                         btnTest.IsEnabled = true;
-                    }));
+                    });
 
                     engine.Close();
                 });    
             };
             #endregion
 
+            btnCopy.Click += (s, e) => {
+                Clipboard.SetText(MathMLCopy);
+                btnCopy.IsEnabled = false;
+                btnCopy.Content = "Kopieret";
 
+                Task.Run(async () => {
+                    await Task.Delay(3000);
+                    btnCopy.Dispatcher.Invoke(() => {
+                        btnCopy.IsEnabled = true;
+                        btnCopy.Content = "Kopier (Maple)";
+                    });
+                });
 
+            };
         }
 
         private void BtnMapleSelect_Click(object sender, RoutedEventArgs e)

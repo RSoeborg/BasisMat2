@@ -23,18 +23,62 @@ namespace BasisMat2.Maple
             return new MapleMatrix(output); // create maple matrix from lprint and return
         }
 
+        public async Task<IWindow> GaussJordanEliminationTutor(MapleMatrix matrix)
+        {
+            var WinTitle = "Gauss-Jordan Elimination";
+            var WinList = new MSWinList();
+            var PrevWins = WinList.Windows.Where(win => win.Title.EndsWith(WinTitle));
+            await Evaluate($"GaussJordanEliminationTutor({matrix});", false);
+
+            IWindow window = default(IWindow);
+            while (window == default(IWindow))
+            {
+                await Task.Delay(5);   
+                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith(WinTitle) && !PrevWins.Contains(c));
+            }
+
+            if (window is MSWindow)//minimize instantly when window is idle
+            {
+                await Task.Delay(200);
+                ((MSWindow)window).SetWindowState(MSWindow.SW.SHOWMINIMIZED);
+            } else await Task.Delay(200);//wait for it to be loaded properly.
+            return window;
+        }
         public async Task<IWindow> GaussianEliminationTutor(MapleMatrix matrix)
         {
+            var WinTitle = "Elimination";
             var WinList = new MSWinList();
-            await Evaluate($"GaussJordanEliminationTutor({matrix});", false);
+            var PrevWins = WinList.Windows.Where(win => win.Title.EndsWith(WinTitle));
+            await Evaluate($"GaussianEliminationTutor({matrix});", false);
+
             IWindow window = default(IWindow);
             while (window == default(IWindow))
             {
                 await Task.Delay(5);
-                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith("Gauss-Jordan Elimination"));
+                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith(WinTitle) && !PrevWins.Contains(c));
             }
+            
             await Task.Delay(200);//wait for it to be loaded properly.
             return window;
+        }
+
+
+        public async Task<MapleMatrix> AddRow(MapleMatrix Matrix, int i, int j, string factor)
+        {
+            var matrix = await Evaluate($"lprint(AddRow({Matrix}, {i}, {j}, {factor}));");
+            return new MapleMatrix(matrix);
+        }
+
+        public async Task<MapleMatrix> RowOperation(MapleMatrix Matrix, int[] Rows, string Factor)
+        {
+            var matrix = await Evaluate($"lprint(RowOperation({Matrix}, [{string.Join(",", Rows)}], {Factor}));");
+            return new MapleMatrix(matrix);
+        }
+
+        public async Task<MapleMatrix> RowOperation(MapleMatrix Matrix, int Row, string Factor)
+        {
+            var matrix = await Evaluate($"lprint(RowOperation({Matrix}, {Row}, {Factor}));");
+            return new MapleMatrix(matrix);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace BasisMat2.Maple
 
         public async void IncludePackage(string PackageName)
         {
-            await Evaluate($"with({PackageName});", false);
+            await Evaluate($"with({PackageName}):", false);
         }
 
      
@@ -65,7 +65,7 @@ namespace BasisMat2.Maple
             MapleProcess.StandardInput.WriteLine($"{Expression}");
             if (!HasData) return "";
             await WaitForData();
-            return GetOutput().Replace("\r\n", string.Empty);
+            return GetOutput();
         }
 
         private void ClearBufferedData()
@@ -87,15 +87,22 @@ namespace BasisMat2.Maple
         private async Task WaitForData(int lines = 1)
         {
             while (InputData.Length == 0) { }
-            lock (InputMutex)
+
+            
+            int originalLength = InputData.Length;
+            int timesEqual = 0;
+            while (true)
             {
-                while (true)
+                await Task.Delay(200);
+                if (originalLength != InputData.Length) { originalLength = InputData.Length; continue; }
+
+                timesEqual++;
+
+                if (timesEqual > 5)
                 {
-                    while (InputData.Length == 0) { }
                     break;
                 }
             }
-            await Task.Delay(500);
         }
         private async void SkipData(int lines = 1)
         {
