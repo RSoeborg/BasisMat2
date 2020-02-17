@@ -34,109 +34,214 @@
                         Color="#3E3E42"
                         ShadowDepth="0"/>
                 </Border.Effect>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="minimizeButton"
+                <Grid>
+                    <Label 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" 
+                        Content="HC Udregner" 
+                        Margin="10 0 0 0" 
+                        FontWeight="Medium" 
+                        FontFamily="Helvetica"/>
+                    <Label 
+                        x:Name="lblMaplePath" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Content="Venligst vælg maple path" 
+                        FontWeight="Light" 
+                        FontFamily="Helvetica"/>
+                    <StackPanel 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                        <Button 
+                            x:Name="minimizeButton"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}"
                             Style="{StaticResource MaxMinButton}" Click="minimizeButton_Click">
-                        <materialDesign:PackIcon Kind="WindowMinimize"
+                            <materialDesign:PackIcon Kind="WindowMinimize"
                                                      Height="16"
                                                      Width="16"
                                                      VerticalAlignment="Center"
                                                      HorizontalAlignment="Center"/>
-                    </Button>
-                    <Button x:Name="maximizeButton"
+                        </Button>
+                        <Button 
+                            x:Name="maximizeButton"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}" 
                             Style="{StaticResource MaxMinButton}"
                             Click="maximizeButton_Click">
-                        <materialDesign:PackIcon Kind="WindowMaximize"
-                                                     Height="16"
-                                                     Width="16"
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Center"/>
-                    </Button>
-                    <Button x:Name="closeButton"
+                            <materialDesign:PackIcon 
+                                Kind="WindowMaximize"
+                                Height="16"
+                                Width="16"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Button>
+                        <Button 
+                            x:Name="closeButton"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             Height="32" Width="55"
                             BorderBrush="{x:Null}"
                             Style="{StaticResource CloseButton}"
                             Click="closeButton_Click">
-                        <materialDesign:PackIcon Kind="WindowClose"
-                                                     Height="16"
-                                                     Width="16"
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Center"/>
-                    </Button>
-                </StackPanel>
+                            <materialDesign:PackIcon 
+                                Kind="WindowClose"
+                                Height="16"
+                                Width="16"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Border>
-            <Border Background="Transparent" Margin="10" VerticalAlignment="Center">
-                <TabControl MinHeight="200" MinWidth="200">
-                    <TabItem Header="Vælg Maple" IsSelected="true">
+            <Menu>
+                <MenuItem 
+                    Header="Maple"
+                    FontFamily="Helvetica">
+                    <MenuItem 
+                        Header="Connect Maple" 
+                        Click="MenuItem_Click"
+                        FontFamily="Helvetica">
+                        <MenuItem.Icon>
+                            <Image 
+                                Source="Images/maple.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Border 
+                Background="Transparent" 
+                Margin="10" 
+                VerticalAlignment="Center">
+                <TabControl 
+                    MinHeight="200" 
+                    MinWidth="200">
+                    <TabItem 
+                        Header="Vælg Maple" 
+                        IsSelected="true"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
-                            <Button x:Name="btnMapleSelect"
-                                    Content="Vælg Maple"
-                                    HorizontalAlignment="Left"
-                                    Margin="10,10,0,0"
-                                    VerticalAlignment="Top"
-                                    Width="110"
-                                    Click="BtnMapleSelect_Click"/>
-                            <Label x:Name="lblMaplePath"
-                                   Content="Vælg maple path."
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Top"
-                                   Margin="102,7,0,0"/>
-                            <RichTextBox x:Name="rtOutput"
-                                         HorizontalAlignment="Left"
-                                         MinHeight="50"
-                                         VerticalAlignment="Top"
-                                         Margin="10,53,10,0"
-                                         Foreground="White">
+                            <Grid 
+                                Height="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition 
+                                        Width="125*"/>
+                                    <ColumnDefinition 
+                                        Width="241*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel 
+                                    Grid.Column="0" 
+                                    Margin="0,0,6.6,0">
+
+                                </StackPanel>
+                                <Grid 
+                                    Grid.Column="1"  
+                                    Margin="5.4,0,0.2,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition 
+                                            Width="100*"/>
+                                        <ColumnDefinition 
+                                            Width="250*"/>
+                                        <ColumnDefinition 
+                                            Width="100*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label 
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Content="[" 
+                                        FontFamily="Helvetica" 
+                                        FontWeight="Light"
+                                        FontSize="80"/>
+                                    <Grid 
+                                        Grid.Column="1">
+                                        
+                                    </Grid>
+                                    <Label 
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Content="]" 
+                                        FontFamily="Helvetica" 
+                                        FontWeight="Light"
+                                        FontSize="80"/>
+                                </Grid>
+                            </Grid>
+                            <RichTextBox 
+                                x:Name="rtOutput"
+                                HorizontalAlignment="Left"
+                                MinHeight="50"
+                                VerticalAlignment="Top"
+                                Margin="10,53,10,0"
+                                Foreground="White"
+                                FontFamily="Helvetica">
                                 <FlowDocument>
                                     <Paragraph>
-                                        <Run Text=""/>
+                                        <Run 
+                                            Text=""/>
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <Button x:Name="btnTest"
-                                    Content="Udregn Matrix"
-                                    HorizontalAlignment="Left"
-                                    Margin="293,24,0,24"
-                                    VerticalAlignment="Top"
-                                    Width="148"/>
+                            <Button 
+                                x:Name="btnTest"
+                                Content="Udregn Matrix"
+                                HorizontalAlignment="Left"
+                                Margin="293,24,0,24"
+                                VerticalAlignment="Top"
+                                Width="148"
+                                FontFamily="Helvetica"
+                                FontWeight="Light"/>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="Foreground">
+                    <TabItem 
+                        Header="Foreground"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn1" Foreground="Black" VerticalAlignment="Top">Foreground</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="FontFamily">
+                    <TabItem 
+                        Header="FontFamily"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn2" FontFamily="Arial">FontFamily</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="FontSize">
+                    <TabItem 
+                        Header="FontSize"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn3" FontSize="10">FontSize</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="FontStyle">
+                    <TabItem 
+                        Header="FontStyle"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn4" FontStyle="Normal">FontStyle</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="FontWeight">
+                    <TabItem 
+                        Header="FontWeight"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn5" FontWeight="Normal">FontWeight</Button>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="BorderBrush">
+                    <TabItem 
+                        Header="BorderBrush"
+                        FontFamily="Helvetica"
+                        Foreground="White">
                         <StackPanel>
                             <Button Name="btn6" BorderBrush="Red">BorderBrush</Button>
                         </StackPanel>
