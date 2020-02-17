@@ -23,17 +23,16 @@ namespace BasisMat2.Maple
             return new MapleMatrix(output); // create maple matrix from lprint and return
         }
 
-        public async Task<IWindow> GaussJordanEliminationTutor(MapleMatrix matrix)
+        private async Task<IWindow> Tutor(MapleMatrix matrix, string WinTitle, string Method)
         {
-            var WinTitle = "Gauss-Jordan Elimination";
             var WinList = new MSWinList();
             var PrevWins = WinList.Windows.Where(win => win.Title.EndsWith(WinTitle));
-            await Evaluate($"GaussJordanEliminationTutor({matrix});", false);
+            await Evaluate($"{Method}({matrix});", false);
 
-            IWindow window = default(IWindow);
+            IWindow window = default;
             while (window == default(IWindow))
             {
-                await Task.Delay(5);   
+                await Task.Delay(5);
                 window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith(WinTitle) && !PrevWins.Contains(c));
             }
 
@@ -41,25 +40,18 @@ namespace BasisMat2.Maple
             {
                 await Task.Delay(200);
                 ((MSWindow)window).SetWindowState(MSWindow.SW.SHOWMINIMIZED);
-            } else await Task.Delay(200);//wait for it to be loaded properly.
+            }
+            else await Task.Delay(200);//wait for it to be loaded properly.
             return window;
+        }
+
+        public async Task<IWindow> GaussJordanEliminationTutor(MapleMatrix matrix)
+        {
+            return await Tutor(matrix, "Gauss-Jordan Elimination", "GaussJordanEliminationTutor");
         }
         public async Task<IWindow> GaussianEliminationTutor(MapleMatrix matrix)
         {
-            var WinTitle = "Elimination";
-            var WinList = new MSWinList();
-            var PrevWins = WinList.Windows.Where(win => win.Title.EndsWith(WinTitle));
-            await Evaluate($"GaussianEliminationTutor({matrix});", false);
-
-            IWindow window = default(IWindow);
-            while (window == default(IWindow))
-            {
-                await Task.Delay(5);
-                window = WinList.Windows.FirstOrDefault(c => c.Title.EndsWith(WinTitle) && !PrevWins.Contains(c));
-            }
-            
-            await Task.Delay(200);//wait for it to be loaded properly.
-            return window;
+            return await Tutor(matrix, "Elimination", "GaussianEliminationTutor");
         }
 
 
