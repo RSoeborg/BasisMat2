@@ -38,7 +38,7 @@ namespace BasisMat2.Maple
 
             if (window is MSWindow)//minimize instantly when window is idle
             {
-                await Task.Delay(200);
+                await Task.Delay(350);
                 ((MSWindow)window).SetWindowState(MSWindow.SW.SHOWMINIMIZED);
             }
             else await Task.Delay(200);//wait for it to be loaded properly.
