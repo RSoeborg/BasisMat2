@@ -61,9 +61,18 @@ namespace BasisMat2.MathML
             builder.Append("</mfenced>");
         }
 
+        public void MergeML(string ML)
+        {
+            var header = "<math xmlns='http://www.w3.org/1998/Math/MathML'><semantics>";
+            var footer = "</semantics></math>";
+
+            if (!ML.StartsWith(header) && ML.EndsWith(footer))
+            {
+                builder.Append(ML.Substring(header.Length, ML.Length - (header.Length + footer.Length)));
+            }
+            else throw new ArgumentException("Invalid MathML. Ensure output is from Maple.");
+        }
         
-
-
         public override string ToString()
         {
             return builder.ToString() + (IncludeHeader ? "</math>" : "");

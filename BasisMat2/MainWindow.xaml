@@ -176,7 +176,7 @@
                                 x:Name="txtGaussMatrix"
                                 HorizontalAlignment="Stretch" 
                                 Height="28"
-                                Margin="165,11,10,0" 
+                                Margin="10,11,10,0" 
                                 Padding="1"
                                 Text="Matrix(3, 5, [[0, 1, 2, -5, 10], [1, 2, -1, 0, 4], [3, 0, 4, -8, 9]])" 
                                 VerticalAlignment="Top" 
@@ -190,11 +190,14 @@
                                 VerticalAlignment="Top"
                                 Margin="10,53,10,0"
                                 Foreground="White"
-                                FontFamily="Consolas"/>
+                                FontFamily="Consolas"
+                                VerticalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Auto"
+                                MaxHeight="250"/>
                             <Button x:Name="btnTest"
                                     Content="Udregn Matrix"
                                     HorizontalAlignment="Right"
-                                    Margin="0,15,25,25"
+                                    Margin="0,15,25,10"
                                     VerticalAlignment="Bottom"
                                     
                                     Width="148"/>
@@ -202,7 +205,7 @@
                             <Button x:Name="btnCopy"
                                     Content="Kopier (Maple)"
                                     HorizontalAlignment="Right"
-                                    Margin="0,15,200,25"
+                                    Margin="0,0,25,25"
                                     VerticalAlignment="Bottom"
                                     IsEnabled="False"
                                     

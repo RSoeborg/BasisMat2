@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Threading;
+using BasisMat2.MathML;
 
 namespace BasisMat2
 {
@@ -27,8 +28,7 @@ namespace BasisMat2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string MathMLCopy { get; set; }
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +39,8 @@ namespace BasisMat2
             //mathBrowser.Navigate(new Uri(@"file:///C:/Users/Rsoeb/source/repos/BasisMat2/BasisMat2/bin/Debug/MathML/Index.html"));
 
             #region Test (Kan blive slettet NP)
+            MathMLBuilder MathBuilder = default;
+
             btnTest.Click += (s, e) => {
                 var engine = new MapleLinearAlgebra(Settings.Default.Path);
 
@@ -83,23 +85,23 @@ namespace BasisMat2
 
                     var TutorResult = await JavaWin.JavaMapletInteractor.GaussJordanEliminationTutor(engine, matrix);
                     engine.Close();
+                    
+                    MathBuilder = new MathMLBuilder(TutorResult.MathML);
+                    MathBuilder.AddText("\nOpskriver Ligninger:\n");
 
                     var MapleML = new MapleMathML(Settings.Default.Path);
                     MapleML.Open();
 
-                    var ML_Console = await MapleML.Import(TutorResult.MathML);
+                    var ML_Test = await MapleML.Export("Matrix(3, 3, [[-2, 5, -7], [3, -4, 7], [3, -5, 8]])^2 = (Matrix(3, 3, [[-2, 5, -7], [3, -4, 7], [3, -5, 8]])) . (Matrix(3, 3, [[-2, 5, -7], [3, -4, 7], [3, -5, 8]]))");
+                    MathBuilder.MergeML(ML_Test);
+
+                    var ML_Console = await MapleML.Import(MathBuilder.ToString());
                     
-
-
-
                     rtOutput.Dispatcher.Invoke(() => {
                         rtOutput.Document.Blocks.Clear();
                         //rtOutput.AppendText(string.Join("\n", TutorResult.OperationsDa));
                         rtOutput.AppendText(ML_Console);
-
-                        btnCopy.IsEnabled = true;
-                        MathMLCopy = TutorResult.MathML;
-
+                        
                         btnTest.Content = "Udregn Matrix";
                         btnTest.IsEnabled = true;
                     });
@@ -113,12 +115,7 @@ namespace BasisMat2
             #endregion
 
             btnCopy.Click += (s, e) => {
-                var MathML = new MathML.MathMLBuilder(MathMLCopy);
-
-                MathML.AddText("\nOpskriver Ligninger:\n");
-                MathML.AddMatrix(new MapleMatrix(3, 3));
-                
-                Clipboard.SetText(MathML.ToString());
+                Clipboard.SetText(MathBuilder.ToString());
                 btnCopy.IsEnabled = false;
                 btnCopy.Content = "Kopieret";
 

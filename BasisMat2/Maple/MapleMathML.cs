@@ -22,10 +22,40 @@ namespace BasisMat2.Maple
             return Prettify(ML);
         }
 
+        public async Task<string> Export(string MapleInput) {
+            var ExportedValue = await Evaluate($"Export(\"{MapleInput}\");");
+            StringBuilder Builder = new StringBuilder();
+
+            string[] lines = ExportedValue.Replace("\r\n", "\n").Split('\n');
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var Append = "";
+
+                if (i == 0) {
+                    Append = lines[i].Substring(1, lines[i].Length - 2);
+                }
+                else if (i == lines.Length - 1) { Append = lines[i].Substring(0, lines[i].Length - 2); }
+                else
+                {
+                    Append = lines[i].Trim().Substring(0, lines[i].Length - 1);
+                }
+
+
+                Builder.Append(Append);
+            }
+
+            return Builder.ToString();
+            //return ExportedValue.Replace("\\\r\n", "");
+        } 
+
         private string Prettify(string MathML) {
             return MathML
                 .Replace("RightArrow(", string.Empty)
                 .Replace("]],", "]")
+                .Replace("]])", "]")
+
+                .Replace("]]", "]")
                 .Replace("[[", " [")
                 .Replace("#xe6", "æ")
                 .Replace("#xe5", "å")
