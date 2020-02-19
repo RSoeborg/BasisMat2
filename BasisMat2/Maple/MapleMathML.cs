@@ -23,7 +23,13 @@ namespace BasisMat2.Maple
         }
 
         private string Prettify(string MathML) {
-            return MathML.Replace("RightArrow(", string.Empty);
+            return MathML
+                .Replace("RightArrow(", string.Empty)
+                .Replace("]],", "]")
+                .Replace("[[", " [")
+                .Replace("#xe6", "æ")
+                .Replace("#xe5", "å")
+                .Replace("på", "på ");
         }
     }
 

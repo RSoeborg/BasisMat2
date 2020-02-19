@@ -190,7 +190,7 @@
                                 VerticalAlignment="Top"
                                 Margin="10,53,10,0"
                                 Foreground="White"
-                                FontFamily="Helvetica"/>
+                                FontFamily="Consolas"/>
                             <Button x:Name="btnTest"
                                     Content="Udregn Matrix"
                                     HorizontalAlignment="Right"
