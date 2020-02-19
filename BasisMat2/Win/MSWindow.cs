@@ -48,7 +48,7 @@ namespace BasisMat2.Win
             SHOWDEFAULT = 10
         }
 
-        public IntPtr Handle { get; }
+        public readonly IntPtr Handle; // ReadOnly: Used for HashCode() - Do NOT change after init.
 
         public MSWindow(IntPtr Handle) {
             this.Handle = Handle;
@@ -113,6 +113,11 @@ namespace BasisMat2.Win
             }
 
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Handle.GetHashCode();
         }
     }
 }

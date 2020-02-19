@@ -84,6 +84,8 @@
     </ApplicationDefinition>
     <Compile Include="JavaWin\JavaMapletGaussOutput.cs" />
     <Compile Include="JavaWin\JavaMapletInteractor.cs" />
+    <Compile Include="Maple\MapleMathML.cs" />
+    <Compile Include="MathML\MathMLBuilder.cs" />
     <Compile Include="Sniffing\AppOptions.cs" />
     <Compile Include="Sniffing\BufferManager.cs" />
     <Compile Include="Sniffing\Filter\FilterOperator.cs" />

@@ -44,7 +44,7 @@ namespace BasisMat2.Maple
             else await Task.Delay(200);//wait for it to be loaded properly.
             return window;
         }
-
+        
         public async Task<IWindow> GaussJordanEliminationTutor(MapleMatrix matrix)
         {
             return await Tutor(matrix, "Gauss-Jordan Elimination", "GaussJordanEliminationTutor");

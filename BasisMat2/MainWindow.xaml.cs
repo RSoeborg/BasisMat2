@@ -66,7 +66,7 @@ namespace BasisMat2
                     var minified = await engine.LPrint(gaussMatrixRaw);
                     minified = minified.Replace("\r\n", "");
 
-                    MapleMatrix matrix = default(MapleMatrix);
+                    MapleMatrix matrix = default;
 
                     try
                     {
@@ -82,12 +82,21 @@ namespace BasisMat2
                     }
 
                     var TutorResult = await JavaWin.JavaMapletInteractor.GaussJordanEliminationTutor(engine, matrix);
-                     
+                    engine.Close();
+
+                    var MapleML = new MapleMathML(Settings.Default.Path);
+                    MapleML.Open();
+
+                    var ML_Console = await MapleML.Import(TutorResult.MathML);
+                    
+
+
+
                     rtOutput.Dispatcher.Invoke(() => {
                         rtOutput.Document.Blocks.Clear();
-                        rtOutput.AppendText(string.Join("\n", TutorResult.OperationsDa));
-                        
-                        
+                        //rtOutput.AppendText(string.Join("\n", TutorResult.OperationsDa));
+                        rtOutput.AppendText(ML_Console);
+
                         btnCopy.IsEnabled = true;
                         MathMLCopy = TutorResult.MathML;
 
@@ -95,13 +104,21 @@ namespace BasisMat2
                         btnTest.IsEnabled = true;
                     });
 
-                    engine.Close();
+                    MapleML.Close();
+
+                    
+
                 });    
             };
             #endregion
 
             btnCopy.Click += (s, e) => {
-                Clipboard.SetText(MathMLCopy);
+                var MathML = new MathML.MathMLBuilder(MathMLCopy);
+
+                MathML.AddText("\nOpskriver Ligninger:\n");
+                MathML.AddMatrix(new MapleMatrix(3, 3));
+                
+                Clipboard.SetText(MathML.ToString());
                 btnCopy.IsEnabled = false;
                 btnCopy.Content = "Kopieret";
 
